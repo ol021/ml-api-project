@@ -11,8 +11,9 @@ app = FastAPI(title="Bucknell Lending API")
 # =========================
 reg_model = joblib.load("loan_model.pkl")
 clf_model = joblib.load("cl_loan_model.pkl")
+scaler = joblib.load("scaler.pkl")
 
-BEST_THRESHOLD = 0.2
+BEST_THRESHOLD = 0.3
 
 # =========================
 # Health check
@@ -72,14 +73,16 @@ def predict(data: dict):
     # =========================
     # Predictions
     # =========================
-    pred_return = float(reg_model.predict(input_df)[0])
-    prob_default = float(clf_model.predict_proba(input_df)[0][1])
+    scaler = joblib.load("scaler.pkl")
+    input_scaled = scaler.transform(input_df)
+    pred_return = float(reg_model.predict(input_scaled)[0])
+    prob_default = float(clf_model.predict_proba(input_scaled)[0][1])
     prob_fully_paid = 1 - prob_default
 
     # =========================
     # Decision
     # =========================
-    if prob_default < 0.2:
+    if prob_default < BEST_THRESHOLD:
         decision = "APPROVE"
     else:
         decision = "REJECT"
