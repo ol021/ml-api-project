@@ -12,6 +12,7 @@ app = FastAPI(title="Bucknell Lending API")
 reg_model = joblib.load("loan_model.pkl")
 clf_model = joblib.load("cl_loan_model.pkl")
 scaler = joblib.load("scaler.pkl")
+feature_names = joblib.load("feature_names.pkl")
 
 BEST_THRESHOLD = 0.3
 
@@ -69,12 +70,18 @@ def predict(data: dict):
     # Convert to DataFrame
     # =========================
     input_df = pd.DataFrame([input_dict])
+    input_df = input_df[feature_names] 
 
     # =========================
     # Predictions
     # =========================
     scaler = joblib.load("scaler.pkl")
     input_scaled = scaler.transform(input_df)
+    
+    print(input_df)
+    print(input_df.describe())
+    print(input_scaled)
+    
     pred_return = float(reg_model.predict(input_scaled)[0])
     prob_default = float(clf_model.predict_proba(input_scaled)[0][1])
     prob_fully_paid = 1 - prob_default
