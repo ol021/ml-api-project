@@ -1,5 +1,6 @@
 
 from fastapi import FastAPI
+from pydantic import BaseModel
 import joblib
 import numpy as np
 import pandas as pd
@@ -16,11 +17,24 @@ feature_names = joblib.load("feature_names.pkl")
 
 BEST_THRESHOLD = 0.3
 
+# Input schema
+class LoanInput(BaseModel):
+    loan_amnt: float
+    int_rate: float
+    term: str
+    dti: float
+    fico: float
+    annual_inc: float
+    grade: str
+    home_ownership: str
+    purpose: str
+    revol_util: float | None = 0
+
 # =========================
 # Health check
 # =========================
 @app.post("/predict")
-def predict(data: dict):
+def predict(data: LoanInput):
 
     # =========================
     # Base features
@@ -30,12 +44,7 @@ def predict(data: dict):
     # =========================
     # Start with ALL zeros
     # =========================
-    input_dict = {col: 0 for col in [
-        'int_rate','grade_E','grade_D','term_num','grade_F','grade_G',
-        'grade_C','dti','revol_util','home_ownership_RENT','fico_avg',
-        'annual_inc','purpose_debt_consolidation','home_ownership_OWN',
-        'loan_amnt'
-    ]}
+    input_dict = {col: 0 for col in feature_names}
 
     # =========================
     # Fill numeric features
@@ -44,7 +53,7 @@ def predict(data: dict):
     input_dict['term_num'] = term_num
     input_dict['dti'] = data["dti"]
     input_dict['fico_avg'] = data["fico"]
-    input_dict['annual_inc'] = data["annual_inc"]
+    input_dict['annual_inc'] = np.log1p(data["annual_inc"])
     input_dict['loan_amnt'] = data["loan_amnt"]
     input_dict['revol_util'] = data.get("revol_util", 0)  # optional
 
@@ -75,12 +84,8 @@ def predict(data: dict):
     # =========================
     # Predictions
     # =========================
-    scaler = joblib.load("scaler.pkl")
-    input_scaled = scaler.transform(input_df)
+    input_scaled = pd.DataFrame(scaler.transform(input_df), columns=input_df.columns, index=input_df.index)
     
-    print(input_df)
-    print(input_df.describe())
-    print(input_scaled)
     
     pred_return = float(reg_model.predict(input_scaled)[0])
     prob_default = float(clf_model.predict_proba(input_scaled)[0][1])
