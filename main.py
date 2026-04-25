@@ -1,31 +1,95 @@
+
 from fastapi import FastAPI
 import joblib
 import numpy as np
+import pandas as pd
 
-# --- Create the API application ---
-app = FastAPI(title="Churn Prediction API")
+app = FastAPI(title="Bucknell Lending API")
 
-# --- Load the saved model (from the .pkl file) ---
-model = joblib.load("churn_model.pkl")
+# =========================
+# Load models
+# =========================
+reg_model = joblib.load("loan_model.pkl")
+clf_model = joblib.load("cl_loan_model.pkl")
 
-# --- Endpoint 1: Home page (just confirms the API is alive) ---
-@app.get("/")
-def home():
-    return {"message": "Churn Prediction API is running"}
+BEST_THRESHOLD = 0.2
 
-# --- Endpoint 2: Prediction (this is the one that does the work) ---
+# =========================
+# Health check
+# =========================
 @app.post("/predict")
 def predict(data: dict):
-    # Pull the customer's features out of the incoming request
-    features = np.array([[
-        data["monthly_spend"],
-        data["tenure_months"],
-        data["support_calls"]
-    ]])
 
-    # Use the model to get a churn probability
-    churn_prob = model.predict_proba(features)[0][1]
+    # =========================
+    # Base features
+    # =========================
+    term_num = 36 if data["term"] == "36 months" else 60
+
+    # =========================
+    # Start with ALL zeros
+    # =========================
+    input_dict = {col: 0 for col in [
+        'int_rate','grade_E','grade_D','term_num','grade_F','grade_G',
+        'grade_C','dti','revol_util','home_ownership_RENT','fico_avg',
+        'annual_inc','purpose_debt_consolidation','home_ownership_OWN',
+        'loan_amnt'
+    ]}
+
+    # =========================
+    # Fill numeric features
+    # =========================
+    input_dict['int_rate'] = data["int_rate"]
+    input_dict['term_num'] = term_num
+    input_dict['dti'] = data["dti"]
+    input_dict['fico_avg'] = data["fico"]
+    input_dict['annual_inc'] = data["annual_inc"]
+    input_dict['loan_amnt'] = data["loan_amnt"]
+    input_dict['revol_util'] = data.get("revol_util", 0)  # optional
+
+    # =========================
+    # One-hot encoding
+    # =========================
+
+    # Grade
+    grade = data["grade"]
+    if f"grade_{grade}" in input_dict:
+        input_dict[f"grade_{grade}"] = 1
+
+    # Home ownership
+    home = data["home_ownership"]
+    if f"home_ownership_{home}" in input_dict:
+        input_dict[f"home_ownership_{home}"] = 1
+
+    # Purpose
+    if data["purpose"] == "debt_consolidation":
+        input_dict["purpose_debt_consolidation"] = 1
+
+    # =========================
+    # Convert to DataFrame
+    # =========================
+    input_df = pd.DataFrame([input_dict])
+
+    # =========================
+    # Predictions
+    # =========================
+    pred_return = float(reg_model.predict(input_df)[0])
+    prob_default = float(clf_model.predict_proba(input_df)[0][1])
+    prob_fully_paid = 1 - prob_default
+
+    # =========================
+    # Decision
+    # =========================
+    if prob_default < 0.2:
+        decision = "APPROVE"
+    else:
+        decision = "REJECT"
+
+    score = pred_return * (1 - prob_default)
 
     return {
-        "churn_probability": round(float(churn_prob), 4)
+        "predicted_return": round(pred_return, 4),
+        "prob_default": round(prob_default, 4),
+        "prob_fully_paid": round(prob_fully_paid, 4),
+        "decision": decision,
+        "score": round(score, 4)
     }
