@@ -1,6 +1,5 @@
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 import joblib
 import numpy as np
 import pandas as pd
@@ -17,24 +16,11 @@ feature_names = joblib.load("feature_names.pkl")
 
 BEST_THRESHOLD = 0.3
 
-# Input schema
-class LoanInput(BaseModel):
-    loan_amnt: float
-    int_rate: float
-    term: str
-    dti: float
-    fico: float
-    annual_inc: float
-    grade: str
-    home_ownership: str
-    purpose: str
-    revol_util: float | None = 0
-
 # =========================
 # Health check
 # =========================
 @app.post("/predict")
-def predict(data: LoanInput):
+def predict(data: dict):
 
     # =========================
     # Base features
