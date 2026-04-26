@@ -22,20 +22,10 @@ st.markdown(f"""
 <style>
 
 /* Background layer */
-.stApp::before {{
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
+.stApp {{
     background: url("data:image/jpeg;base64,{img_base64}");
     background-size: cover;
     background-position: center;
-
-    filter: blur(6px);
-    z-index: -2;
 }}
 
 /* White overlay */
@@ -47,7 +37,7 @@ st.markdown(f"""
     width: 100%;
     height: 100%;
 
-    background: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.65);
     z-index: -1;
 }}
 
