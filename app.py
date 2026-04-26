@@ -18,97 +18,81 @@ img_base64 = get_base64("bucknell_2.jpg")
 # =========================
 st.set_page_config(page_title="Bucknell Lending AI", layout="centered")
 
-st.markdown(f"""
+st.markdown("""
 <style>
 
-/* Background layer */
-.stApp {{
-    background: url("data:image/jpeg;base64,{img_base64}");
+/* ===== BACKGROUND ===== */
+.stApp {
+    background: url("data:image/jpeg;base64,{img_base64}") no-repeat center center fixed;
     background-size: cover;
-    background-position: center;
-    
-}}
+}
 
-/* White overlay */
-.stApp::after {{
+/* Soft dark overlay (better than white for readability) */
+.stApp::after {
     content: "";
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: rgba(255,255,255,0.95);
+    inset: 0;
+    background: rgba(0, 30, 60, 0.55); /* Bucknell blue tint */
     z-index: -1;
-}}
+}
 
-.main .block-container {{
-    background: rgba(255,255,255,0.85);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0px 8px 30px rgba(0,0,0,0.15);
-}}
+/* ===== MAIN CONTAINER (GLASS EFFECT) ===== */
+.main .block-container {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 2.5rem;
+    border-radius: 18px;
+    max-width: 900px;
+    margin: auto;
+    
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
 
-.stMarkdown {{
-    font-size: 16px;
-    line-height: 1.6;
-}}
-
-/* Titles */
-h1 {{
-    color: #003366;
+/* ===== TEXT ===== */
+h1 {
+    color: white;
     text-align: center;
     font-size: 42px;
     font-weight: 800;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-}}
+    letter-spacing: 1px;
+}
 
-h2, h3 {{
-    color: #FF6600;
-    front-weight: 700;
-}}
+h2, h3 {
+    color: #FF6600; /* Bucknell orange */
+    font-weight: 700;
+}
 
-/* General text */
-p, label, div {{
-    color: #111111;
-    font-weight: 500;
-}}
+p {
+    color: #333;
+    font-size: 16px;
+}
 
-/* Buttons */
-.stButton>button {{
-    background-color: #003366;
+/* Labels */
+label {
+    color: #003366; /* Bucknell blue */
+    font-weight: 600;
+}
+
+/* ===== BUTTON ===== */
+.stButton>button {
+    background: linear-gradient(90deg, #003366, #0055A4);
     color: white;
-    border-radius: 8px;
-    font-weight: bold;
-}}
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+}
 
-.stButton>button:hover {{
-    background-color: #FF6600;
-    color: white;
-}}
+.stButton>button:hover {
+    background: #FF6600;
+}
 
-/* Metrics cards */
-[data-testid="stMetric"] {{
-    background-color: white;
+/* ===== METRICS ===== */
+[data-testid="stMetric"] {
+    background: white;
     padding: 15px;
-    border-radius: 10px;
-    border-left: 6px solid #003366;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-}}
-
-/* Recommendation box */
-.decision-box {{
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-}}
-
-/* Divider */
-hr {{
-    border: 1px solid #003366;
-}}
+    border-radius: 12px;
+    border-left: 5px solid #FF6600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
 </style>
 """, unsafe_allow_html=True)
@@ -116,10 +100,13 @@ hr {{
 st.title("🏦 Bucknell Lending Decision Engine")
 
 st.markdown("""
-Evaluate loan applications using machine learning.
-
-!! This system is designed to **rank loans and improve selection**, not perfectly predict returns !!
-""")
+<p style='text-align:center; color:white; font-size:16px;'>
+Evaluate loan applications using machine learning.<br>
+<span style='opacity:0.8'>
+This system ranks loans to improve selection, not perfectly predict returns.
+</span>
+</p>
+""", unsafe_allow_html=True)
 
 # =========================
 # Inputs
