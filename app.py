@@ -38,12 +38,12 @@ st.markdown(f"""
     width: 100%;
     height: 100%;
 
-    background: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.95);
     z-index: -1;
 }}
 
 .main .block-container {{
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.85);
     padding: 2rem;
     border-radius: 15px;
     box-shadow: 0px 8px 30px rgba(0,0,0,0.15);
