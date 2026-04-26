@@ -26,6 +26,7 @@ st.markdown(f"""
     background: url("data:image/jpeg;base64,{img_base64}");
     background-size: cover;
     background-position: center;
+    
 }}
 
 /* White overlay */
@@ -37,7 +38,7 @@ st.markdown(f"""
     width: 100%;
     height: 100%;
 
-    background: rgba(255,255,255,0.65);
+    background: rgba(255,255,255,0.9);
     z-index: -1;
 }}
 
