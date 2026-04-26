@@ -57,7 +57,7 @@ h1 {{
 }}
 
 h2, h3 {{
-    color: #FF6600; /* Bucknell orange */
+    color: white !important;
     font-weight: 700;
 }}
 
