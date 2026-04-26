@@ -18,26 +18,26 @@ img_base64 = get_base64("bucknell_2.jpg")
 # =========================
 st.set_page_config(page_title="Bucknell Lending AI", layout="centered")
 
-st.markdown("""
+st.markdown(f"""
 <style>
 
 /* ===== BACKGROUND ===== */
-.stApp {
+.stApp {{
     background: url("data:image/jpeg;base64,{img_base64}") no-repeat center center fixed;
     background-size: cover;
-}
+}}
 
 /* Soft dark overlay (better than white for readability) */
-.stApp::after {
+.stApp::after {{
     content: "";
     position: fixed;
     inset: 0;
     background: rgba(0, 30, 60, 0.55); /* Bucknell blue tint */
     z-index: -1;
-}
+}}
 
 /* ===== MAIN CONTAINER (GLASS EFFECT) ===== */
-.main .block-container {
+.main .block-container {{
     background: rgba(255, 255, 255, 0.92);
     padding: 2.5rem;
     border-radius: 18px;
@@ -45,54 +45,54 @@ st.markdown("""
     margin: auto;
     
     box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-}
+}}
 
 /* ===== TEXT ===== */
-h1 {
+h1 {{
     color: white;
     text-align: center;
     font-size: 42px;
     font-weight: 800;
     letter-spacing: 1px;
-}
+}}
 
-h2, h3 {
+h2, h3 {{
     color: #FF6600; /* Bucknell orange */
     font-weight: 700;
-}
+}}
 
-p {
+p {{
     color: #333;
     font-size: 16px;
-}
+}}
 
 /* Labels */
-label {
+label {{
     color: #003366; /* Bucknell blue */
     font-weight: 600;
-}
+}}
 
 /* ===== BUTTON ===== */
-.stButton>button {
+.stButton>button {{
     background: linear-gradient(90deg, #003366, #0055A4);
     color: white;
     border-radius: 10px;
     font-weight: 600;
     padding: 0.6rem 1rem;
-}
+}}
 
-.stButton>button:hover {
+.stButton>button:hover {{
     background: #FF6600;
-}
+}}
 
 /* ===== METRICS ===== */
-[data-testid="stMetric"] {
+[data-testid="stMetric"] {{
     background: white;
     padding: 15px;
     border-radius: 12px;
     border-left: 5px solid #FF6600;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
+}}
 
 </style>
 """, unsafe_allow_html=True)
