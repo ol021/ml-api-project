@@ -273,10 +273,12 @@ chart_df = pd.DataFrame({
 
 st.line_chart(chart_df)
 
-st.caption("""
+st.markdown("""
+<p style='text-align:center; color:white; font-size:14px; opacity:0.85;'>
 The model consistently selects loans with **better returns than random selection**, 
 especially in the top 20%.
-""")
+</p>
+""", unsafe_allow_html=True)
 
 # =========================
 # THRESHOLD GRAPH
@@ -292,18 +294,29 @@ df_thresh = pd.DataFrame({
 
 st.bar_chart(df_thresh)
 
-st.caption("""
-While absolute returns are negative, the model **significantly outperforms random selection**.
+st.markdown("""
+<p style='text-align:center; color:white; font-size:14px; opacity:0.85;'>
+While absolute returns are negative, the model <b>significantly outperforms random selection</b>.<br>
 This indicates the model is effectively ranking loans by risk-adjusted return.
-""")
+</p>
+""", unsafe_allow_html=True)
 
 # =========================
 # FINAL MESSAGE
 # =========================
-st.info("""
-This system is designed to assist decision-making by prioritizing better loan opportunities.
+st.markdown("""
+<div style='
+    background: rgba(255,255,255,0.15);
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+'>
+This system is designed to assist decision-making by prioritizing better loan opportunities.<br>
 It is not intended to perfectly predict outcomes, but to improve investment selection.
-""")
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
