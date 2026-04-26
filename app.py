@@ -42,6 +42,12 @@ st.markdown(f"""
     z-index: -1;
 }}
 
+.main .block-container {{
+    background: rgba(255,255,255,0.9);
+    padding: 2rem;
+    border-radius: 15px;
+}}
+
 /* Titles */
 h1 {{
     color: #003366;
