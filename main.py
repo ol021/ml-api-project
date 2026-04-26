@@ -13,6 +13,7 @@ reg_model = joblib.load("loan_model.pkl")
 clf_model = joblib.load("cl_loan_model.pkl")
 scaler = joblib.load("scaler.pkl")
 feature_names = joblib.load("feature_names.pkl")
+rmse = joblib.load("rmse.pkl")
 
 BEST_THRESHOLD = 0.3
 
@@ -76,7 +77,13 @@ def predict(data: dict):
     pred_return = float(reg_model.predict(input_scaled)[0])
     prob_default = float(clf_model.predict_proba(input_scaled)[0][1])
     prob_fully_paid = 1 - prob_default
-
+    
+    # =========================
+    # Uncertainty (confidence interval)
+    # =========================
+    lower = pred_return - rmse
+    upper = pred_return + rmse
+    confidence = abs(prob_default - 0.5) * 2
     # =========================
     # Decision
     # =========================
@@ -84,13 +91,17 @@ def predict(data: dict):
         decision = "APPROVE"
     else:
         decision = "REJECT"
+    
 
     score = pred_return * (1 - prob_default)
 
     return {
         "predicted_return": round(pred_return, 4),
+        "return_lower": round(lower, 4),
+        "return_upper": round(upper, 4),
         "prob_default": round(prob_default, 4),
         "prob_fully_paid": round(prob_fully_paid, 4),
+        "confidence": round(confidence, 4),
         "decision": decision,
         "score": round(score, 4)
     }

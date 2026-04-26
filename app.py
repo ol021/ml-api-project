@@ -4,19 +4,101 @@ import streamlit as st
 import requests
 import numpy as np
 import pandas as pd
+import base64
 
 API_URL = "https://ml-api-project-1-kfrb.onrender.com/predict"
+
+def get_base64(img_file):
+    with open(img_file, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+img_base64 = get_base64("bucknell_bg.jpg")
 
 # =========================
 # Page config
 # =========================
 st.set_page_config(page_title="Bucknell Lending AI", layout="centered")
 
-st.markdown("""
-    <style>
-    h1 { color: #FF6600; text-align: center; }
-    .metric-box { text-align:center; }
-    </style>
+st.markdown(f"""
+<style>
+
+/* Background layer */
+.stApp::before {{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: url("data:image/jpeg;base64,{img_base64}");
+    background-size: cover;
+    background-position: center;
+
+    filter: blur(6px);
+    z-index: -2;
+}}
+
+/* White overlay */
+.stApp::after {{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(255,255,255,0.75);
+    z-index: -1;
+}}
+
+/* Titles */
+h1 {{
+    color: #003366;
+    text-align: center;
+}}
+
+h2, h3 {{
+    color: #FF6600;
+}}
+
+/* Buttons */
+.stButton>button {{
+    background-color: #003366;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+}}
+
+.stButton>button:hover {{
+    background-color: #FF6600;
+    color: white;
+}}
+
+/* Metrics cards */
+[data-testid="stMetric"] {{
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 6px solid #003366;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+}}
+
+/* Recommendation box */
+.decision-box {{
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}}
+
+/* Divider */
+hr {{
+    border: 1px solid #003366;
+}}
+
+</style>
 """, unsafe_allow_html=True)
 
 st.title("🏦 Bucknell Lending Decision Engine")
@@ -24,7 +106,7 @@ st.title("🏦 Bucknell Lending Decision Engine")
 st.markdown("""
 Evaluate loan applications using machine learning.
 
-!! This system is designed to **rank loans and improve selection**, not perfectly predict returns!!
+!! This system is designed to **rank loans and improve selection**, not perfectly predict returns !!
 """)
 
 # =========================
@@ -66,8 +148,6 @@ if dti > 45:
 if fico < 500:
     warnings.append("Very low credit score → significantly elevated default risk")
     
-if int_rate < 5 or int_rate > 35:
-    errors.append("Interest rate is out of expected bounds.")
 
 # =========================
 # Show validation warnings
@@ -113,6 +193,28 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
             col1.metric("💰 Return", f"{result['predicted_return']:.3f}")
             col2.metric("✅ Fully Paid", f"{result['prob_fully_paid']:.2%}")
             col3.metric("⚠️ Default Risk", f"{result['prob_default']:.2%}")
+            
+            st.subheader("📉 Expected Return Range")
+
+            st.write(
+                f"{result['predicted_return']:.2f} "
+                f"(range: {result['return_lower']:.2f} to {result['return_upper']:.2f})"
+            )
+            
+            st.markdown("---")
+            
+            st.subheader("🔍 Model Confidence")
+
+            confidence = result["confidence"]
+
+            st.progress(confidence)
+
+            if confidence < 0.3:
+                st.warning("Low confidence prediction")
+            elif confidence < 0.6:
+                st.info("Moderate confidence")
+            else:
+                st.success("High confidence")
 
             st.markdown("---")
 
@@ -127,6 +229,10 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
 
             st.markdown("### 🧠 Risk-Adjusted Score")
             st.write(f"{result['score']:.3f}")
+            st.caption("""
+            This score combines expected return and default risk.
+            Higher values indicate better lending opportunities.
+            """)
 
         else:
             st.error(f"API error: {response.status_code}")
@@ -197,3 +303,8 @@ st.info("""
 This system is designed to assist decision-making by prioritizing better loan opportunities.
 It is not intended to perfectly predict outcomes, but to improve investment selection.
 """)
+
+st.markdown("---")
+st.markdown(
+    "**Developed by Odilon Ligan & Nick Snyder**  |  Bucknell University"
+)
