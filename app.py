@@ -5,7 +5,7 @@ import requests
 import numpy as np
 import pandas as pd
 
-API_URL = "https://ml-api-project-1-kfrb.onrender.com"
+API_URL = "https://ml-api-project-1-kfrb.onrender.com/predict"
 
 # =========================
 # Page config
@@ -129,7 +129,8 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
             st.write(f"{result['score']:.3f}")
 
         else:
-            st.error("API error")
+            st.error(f"API error: {response.status_code}")
+            st.write(response.text)
     
     except requests.exceptions.RequestException:
         st.error("Cannot reach API")
