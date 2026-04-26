@@ -251,8 +251,10 @@ st.markdown("---")
 st.header("📈 Model Performance Insights")
 
 st.markdown("""
-This model is evaluated based on **loan selection quality**, not raw prediction accuracy.
-""")
+<p style='text-align:center; color:white; font-size:16px;'>
+This model is evaluated based on **loan selection quality**, not raw prediction accuracy.<br>
+</p>
+""", unsafe_allow_html=True)
 
 # =========================
 # TOP-K PERFORMANCE GRAPH
@@ -304,6 +306,9 @@ It is not intended to perfectly predict outcomes, but to improve investment sele
 """)
 
 st.markdown("---")
-st.markdown(
-    "**Developed by Odilon Ligan & Nick Snyder**  |  Bucknell University"
-)
+
+st.markdown("""
+<p style='text-align:center; color:white; font-size:16px;'>
+"**Developed by Odilon Ligan & Nick Snyder**  |  Bucknell University"<br>
+</p>
+""", unsafe_allow_html=True)
