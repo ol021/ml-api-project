@@ -57,7 +57,7 @@ h1 {{
 }}
 
 h2, h3 {{
-    color: white !important;
+    color: #FF6600; /* Bucknell orange */
     font-weight: 700;
 }}
 
@@ -228,10 +228,14 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
 
             st.markdown("### 🧠 Risk-Adjusted Score")
             st.write(f"{result['score']:.3f}")
-            st.caption("""
+            
+            st.markdown("""
+            <p style='text-align:center; color:white; font-size:16px;'>
             This score combines expected return and default risk.
-            Higher values indicate better lending opportunities.
-            """)
+            Higher values indicate better lending opportunitiesy.<br>
+            </p>
+            """, unsafe_allow_html=True)
+
 
         else:
             st.error(f"API error: {response.status_code}")
