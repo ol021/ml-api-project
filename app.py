@@ -38,24 +38,40 @@ st.markdown(f"""
     width: 100%;
     height: 100%;
 
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.65);
     z-index: -1;
 }}
 
 .main .block-container {{
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
     padding: 2rem;
     border-radius: 15px;
+    box-shadow: 0px 8px 30px rgba(0,0,0,0.15);
+}}
+
+.stMarkdown {{
+    font-size: 16px;
+    line-height: 1.6;
 }}
 
 /* Titles */
 h1 {{
     color: #003366;
     text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
 }}
 
 h2, h3 {{
     color: #FF6600;
+    front-weight: 700;
+}}
+
+/* General text */
+p, label, div {{
+    color: #111111;
+    font-weight: 500;
 }}
 
 /* Buttons */
