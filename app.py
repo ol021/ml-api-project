@@ -66,9 +66,9 @@ p {{
     font-size: 16px;
 }}
 
-/* Labels */
-label {{
-    color: white; /* Bucknell white */
+/* Streamlit widget labels ONLY */
+[data-testid="stWidgetLabel"] {{
+    color: white !important;
     font-weight: 600;
 }}
 
