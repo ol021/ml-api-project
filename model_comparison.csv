@@ -1,0 +1,4 @@
+Metric,LR Train,LR Test,Lasso Train,Lasso Test,Poly Train,Poly Test,RF Train,RF Test
+MAE ($),4.857,5.713,4.857,5.712,4.846,5.662,4.802,5.674
+RMSE ($),7.349,9.86,7.349,9.859,7.344,9.747,7.294,9.741
+R² (unitless),0.022,-0.159,0.022,-0.158,0.023,-0.132,0.036,-0.131
