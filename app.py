@@ -66,31 +66,23 @@ p {{
     font-size: 16px;
 }}
 
+label {{
+    color: white;
+    font-weight: 600;
+}}
+
 /* Streamlit widget labels ONLY */
 [data-testid="stWidgetLabel"] {{
     color: white !important;
     font-weight: 600;
 }}
-
-/* Slider labels */
-div[data-testid="stSlider"] > div > label {{
-    color: white !important;
-}}
-
-/* Number input (Loan Amount, Income) */
-div[data-testid="stNumberInput"] label {{
-    color: white !important;
-}}
-
-/* Selectbox (Grade, Home Ownership, Purpose) */
+/* ALL widget labels (Streamlit internal) */
+div[data-testid="stWidgetLabel"],
+div[data-testid="stSlider"] label,
+div[data-testid="stNumberInput"] label,
 div[data-testid="stSelectbox"] label {{
     color: white !important;
-}}
-
-/* Fallback for anything missed */
-div[data-testid="stForm"] label,
-div.row-widget label {{
-    color: white !important;
+    font-weight: 600;
 }}
 
 /* ===== BUTTON ===== */
@@ -200,8 +192,8 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
     }
     
     try:
-
-        response = requests.post(API_URL, json=payload)
+        with st.spinner("Evaluating loan..."):
+            response = requests.post(API_URL, json=payload)
 
         if response.status_code == 200:
             result = response.json()
