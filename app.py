@@ -202,14 +202,13 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
 
             col1, col2, col3 = st.columns(3)
 
-            col1.metric("💰 Return", f"{result['predicted_return']:.3f}")
+            col1.metric("💰 Return", f"${result['predicted_return']:.3f}")
             col2.metric("✅ Fully Paid", f"{result['prob_fully_paid']:.2%}")
             col3.metric("⚠️ Default Risk", f"{result['prob_default']:.2%}")
             
             st.subheader("📉 Expected Return Range")
 
             st.markdown(
-                f"<h3 style='color:white;'>${result['predicted_return']:.2f}</h3>"
                 f"<p style='color:white;'>(range: {result['return_lower']:.2f} to {result['return_upper']:.2f})</p>",
                 unsafe_allow_html=True
             )
