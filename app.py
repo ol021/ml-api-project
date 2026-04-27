@@ -208,9 +208,10 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
             
             st.subheader("📉 Expected Return Range")
 
-            st.write(
-                f"{result['predicted_return']:.2f} "
-                f"(range: {result['return_lower']:.2f} to {result['return_upper']:.2f})"
+            st.markdown(
+                f"<h3 style='color:white;'>${result['predicted_return']:.2f}</h3>"
+                f"<p style='color:white;'>(range: {result['return_lower']:.2f} to {result['return_upper']:.2f})</p>",
+                unsafe_allow_html=True
             )
             
             st.markdown("---")
@@ -220,13 +221,15 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
             confidence = result["confidence"]
 
             st.progress(confidence)
-
+            
             if confidence < 0.3:
-                st.warning("Low confidence prediction")
+                st.markdown("<p style='color:#FF4B4B;'>⚠️ Low confidence prediction</p>", unsafe_allow_html=True)
+
             elif confidence < 0.6:
-                st.info("Moderate confidence")
+                st.markdown("<p style='color:#FFA500;'>⚠️ Moderate confidence</p>", unsafe_allow_html=True)
+
             else:
-                st.success("High confidence")
+                st.markdown("<p style='color:#00C851;'>✔ High confidence</p>", unsafe_allow_html=True)
 
             st.markdown("---")
 
