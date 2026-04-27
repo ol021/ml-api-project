@@ -68,7 +68,7 @@ p {{
 
 /* Labels */
 label {{
-    color: #003366; /* Bucknell blue */
+    color: white; /* Bucknell white */
     font-weight: 600;
 }}
 
