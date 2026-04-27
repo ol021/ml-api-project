@@ -72,6 +72,27 @@ p {{
     font-weight: 600;
 }}
 
+/* Slider labels */
+div[data-testid="stSlider"] > div > label {{
+    color: white !important;
+}}
+
+/* Number input (Loan Amount, Income) */
+div[data-testid="stNumberInput"] label {{
+    color: white !important;
+}}
+
+/* Selectbox (Grade, Home Ownership, Purpose) */
+div[data-testid="stSelectbox"] label {{
+    color: white !important;
+}}
+
+/* Fallback for anything missed */
+div[data-testid="stForm"] label,
+div.row-widget label {{
+    color: white !important;
+}}
+
 /* ===== BUTTON ===== */
 .stButton>button {{
     background: linear-gradient(90deg, #003366, #0055A4);
