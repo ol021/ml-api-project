@@ -57,7 +57,7 @@ h1 {{
 }}
 
 h2, h3 {{
-    color: white !important;
+    color: black !important;
     font-weight: 700;
 }}
 
@@ -237,7 +237,7 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
             st.subheader("📉 Expected Return Range")
 
             st.markdown(
-                f"<p style='color:white;'>(range: {result['return_lower']:.2f} to {result['return_upper']:.2f})</p>",
+                f"<p style='color:black;'>(range: {result['return_lower']:.2f} to {result['return_upper']:.2f})</p>",
                 unsafe_allow_html=True
             )
             
@@ -273,7 +273,7 @@ if st.button("🚀 Evaluate Loan", disabled=len(errors) > 0):
             st.write(f"{result['score']:.3f}")
             
             st.markdown("""
-            <p style='text-align:center; color:white; font-size:16px;'>
+            <p style='text-align:center; color:black; font-size:16px;'>
             This score combines expected return and default risk.
             Higher values indicate better lending opportunitiesy.<br>
             </p>
@@ -298,7 +298,7 @@ st.markdown("---")
 st.header("📈 Model Performance Insights")
 
 st.markdown("""
-<p style='text-align:center; color:white; font-size:16px;'>
+<p style='text-align:center; color:black; font-size:16px;'>
 This model is evaluated based on **loan selection quality**, not raw prediction accuracy.<br>
 </p>
 """, unsafe_allow_html=True)
@@ -321,7 +321,7 @@ chart_df = pd.DataFrame({
 st.line_chart(chart_df)
 
 st.markdown("""
-<p style='text-align:center; color:white; font-size:14px; opacity:0.85;'>
+<p style='text-align:center; color:black; font-size:14px; opacity:0.85;'>
 The model consistently selects loans with **better returns than random selection**, 
 especially in the top 20%.
 </p>
@@ -342,7 +342,7 @@ df_thresh = pd.DataFrame({
 st.bar_chart(df_thresh)
 
 st.markdown("""
-<p style='text-align:center; color:white; font-size:14px; opacity:0.85;'>
+<p style='text-align:center; color:black; font-size:14px; opacity:0.85;'>
 While absolute returns are negative, the model <b>significantly outperforms random selection</b>.<br>
 This indicates the model is effectively ranking loans by risk-adjusted return.
 </p>
@@ -356,7 +356,7 @@ st.markdown("""
     background: rgba(255,255,255,0.15);
     padding: 15px;
     border-radius: 10px;
-    color: white;
+    color: black;
     font-size: 15px;
     text-align: center;
 '>
@@ -368,7 +368,7 @@ It is not intended to perfectly predict outcomes, but to improve investment sele
 st.markdown("---")
 
 st.markdown("""
-<p style='text-align:center; color:white; font-size:16px;'>
+<p style='text-align:center; color:black; font-size:16px;'>
 **Developed by Odilon Ligan & Nick Snyder**  | <br>
 </p>
 """, unsafe_allow_html=True)
