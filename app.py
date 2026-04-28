@@ -109,7 +109,7 @@ div[data-testid="stSelectbox"] label {{
 
 /* ===== INPUT BOX TEXT (Loan Amount, etc.) ===== */
 input, textarea {{
-    color: black !important;
+    color: white !important;
     font-weight: 600;
 }}
 
