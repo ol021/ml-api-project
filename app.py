@@ -107,6 +107,34 @@ div[data-testid="stSelectbox"] label {{
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }}
 
+/* ===== INPUT BOX TEXT (Loan Amount, etc.) ===== */
+input, textarea {{
+    color: black !important;
+    font-weight: 600;
+}}
+
+/* Number input specifically */
+div[data-testid="stNumberInput"] input {{
+    color: black !important;
+    background-color: rgba(255,255,255,0.95) !important;
+}}
+
+/* Slider value text (like 12.00) */
+div[data-testid="stSlider"] span {{
+    color: white !important;
+    font-weight: 600;
+}}
+
+/* Slider track (make it darker for contrast) */
+div[data-testid="stSlider"] > div {{
+    background-color: rgba(255,255,255,0.25) !important;
+}}
+
+/* +/- buttons */
+button[kind="secondary"] {{
+    color: black !important;
+}}
+
 </style>
 """, unsafe_allow_html=True)
 
