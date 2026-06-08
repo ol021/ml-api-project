@@ -233,7 +233,7 @@ Potential enhancements include:
 
 ---
 
-## Authors
+## Author
 
 **Odilon Ligan**  
 
