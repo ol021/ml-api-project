@@ -369,6 +369,6 @@ st.markdown("---")
 
 st.markdown("""
 <p style='text-align:center; color:black; font-size:16px;'>
-**Developed by Odilon Ligan & Nick Snyder**  | <br>
+**Developed by Odilon Ligan **  | <br>
 </p>
 """, unsafe_allow_html=True)
